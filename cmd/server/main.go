@@ -22,9 +22,8 @@ func main() {
 	router.HandleFunc("/health", healthCheckHandler).Methods("GET")
 
 	api := router.PathPrefix("/api/v1").Subrouter()
-	protectedApi := api.PathPrefix("/protected").Subrouter()
-	protectedApi.HandleFunc("/", rootHandler).Methods("GET")
-	protectedApi.Use(MiddleBasicAuth)
+	api.HandleFunc("/", rootHandler).Methods("GET")
+	api.Use(MiddleBasicAuth)
 	router.Use(corsMiddleware)
 
 	log.Printf("Server starting on port %s", port)
